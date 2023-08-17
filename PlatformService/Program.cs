@@ -46,3 +46,5 @@ app.Run();
 // kubectl get deployments                                  (Run to get all deployments)
 // kubectl get pods                                         (Run to get all pods)
 // kubectl get services                                     (Run to get all services)
+// kubectl delete deployment <deployment>                   (Run to delete deployment)
+// kubectl apply -f platforms-np-srv.yaml                   (Run from ../Microservices/K8S to create service)
