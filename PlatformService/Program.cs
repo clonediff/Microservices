@@ -40,4 +40,9 @@ app.Run();
 // docker ps                                                (Run to show already launched containers)
 // docker stop <container_id>                               (Run to stop launched container)
 // docker start <container_id>                              (Run to start existing container)
-// docker push clonediff/platformservice                    (Push image to DockerHub)
+// docker push clonediff/platformservice                    (Run to push image to DockerHub)
+
+// kubectl apply -f platforms-depl.yaml                     (Run from ../Microservices/K8S to create deployment)
+// kubectl get deployments                                  (Run to get all deployments)
+// kubectl get pods                                         (Run to get all pods)
+// kubectl get services                                     (Run to get all services)
