@@ -55,3 +55,11 @@ app.Run();
 // kubectl delete deployment <deployment>                   (Run to delete deployment)
 // kubectl apply -f platforms-np-srv.yaml                   (Run from ../Microservices/K8S to create service)
 // kubectl rollout restart deployment platforms-depl        (Run to restart deployment and pull updates)
+
+// kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.8.1/deploy/static/provider/cloud/deploy.yaml
+// (Run to apply ingress-nginx)
+// kubectl get namespace                                    (Run to get all namespaces)
+// kubectl get pods --namespace=<namespace_name>            (Run to get all pods in namespace_name) 
+
+// kubectl apply -f ingress-srv.yaml                        (Run to apply Ingress)
+// Чтобы в ingress-srv.yaml работал acme.com надо в C:\Windows\System32\drivers\etc\hosts прописать "127.0.0.1 acme.com" (на локалке)
