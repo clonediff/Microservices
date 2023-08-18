@@ -673,4 +673,4 @@ fabric.properties
 # Additional files built by Visual Studio
 
 # End of https://www.toptal.com/developers/gitignore/api/rider,visualstudio,visualstudiocode,csharp
-PlatformService/appsettings.Development.json
+*/appsettings.Development.json
