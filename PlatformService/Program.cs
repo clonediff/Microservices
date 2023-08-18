@@ -63,3 +63,10 @@ app.Run();
 
 // kubectl apply -f ingress-srv.yaml                        (Run to apply Ingress)
 // Чтобы в ingress-srv.yaml работал acme.com надо в C:\Windows\System32\drivers\etc\hosts прописать "127.0.0.1 acme.com" (на локалке)
+
+// kubectl get storageclass                                                         (Run to get storages)
+// kubectl apply -f local-pvc.yaml                                                  (Run to apply PersistentVolumeClaim)
+// kubectl get pvc                                                                  (Run to get PersistentVolumeClaims)
+// kubectl create secret generic mssql --from-literal=SA_PASSWORD="pa55w0rd!"       (Run to create secret)
+// kubectl apply -f mssql-plat-depl.yaml                                            (Run to mssql deployment)
+// (Иногда может падать таймаут во время пула изображения, сначала спулил вручную -> заработало)
