@@ -12,8 +12,18 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<AppDbContext>(options => 
-    options.UseInMemoryDatabase("InMem"));
+if (builder.Environment.IsProduction())
+{
+    Console.WriteLine("--> using SqlServer Db");
+    builder.Services.AddDbContext<AppDbContext>(options =>
+        options.UseSqlServer(builder.Configuration.GetConnectionString(AppSettingsConsts.PlatformConnectionString)));
+}
+else
+{
+    Console.WriteLine("--> using InMem Db");
+    builder.Services.AddDbContext<AppDbContext>(options => 
+        options.UseInMemoryDatabase("InMem"));
+}
 
 builder.Services.AddScoped<IPlatformRepo, PlatformRepo>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -37,7 +47,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.PrepPopulation();
+app.PrepPopulation(app.Environment.IsProduction());
 
 app.Run();
 
@@ -70,3 +80,7 @@ app.Run();
 // kubectl create secret generic mssql --from-literal=SA_PASSWORD="pa55w0rd!"       (Run to create secret)
 // kubectl apply -f mssql-plat-depl.yaml                                            (Run to mssql deployment)
 // (Иногда может падать таймаут во время пула изображения, сначала спулил вручную -> заработало)
+
+// dotnet ef migrations add InitialCreate                   (Run to create migration)
+// rebuild platformservice image and push it to docker hub
+// apply new deployment by rollout restart or delete + apply
