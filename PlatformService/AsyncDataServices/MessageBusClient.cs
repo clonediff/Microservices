@@ -16,8 +16,8 @@ public class MessageBusClient : IMessageBusClient
         _configuration = configuration;
         var factory = new ConnectionFactory
         {
-            HostName = _configuration[AppSettingsConsts.RabbitMQHost],
-            Port = int.Parse(_configuration[AppSettingsConsts.RabbitMQPort] ?? string.Empty)
+            HostName = _configuration[AppSettingsConsts.RabbitMqHost],
+            Port = int.Parse(_configuration[AppSettingsConsts.RabbitMqPort] ?? string.Empty)
         };
         try
         {
@@ -50,7 +50,7 @@ public class MessageBusClient : IMessageBusClient
             Console.WriteLine("--> RabbitMQ Connection is closed not sending...");
         }
     }
-
+    
     public void Dispose()
     {
         if (_channel.IsOpen)
