@@ -84,3 +84,5 @@ app.Run();
 // dotnet ef migrations add InitialCreate                   (Run to create migration)
 // rebuild platformservice image and push it to docker hub
 // apply new deployment by rollout restart or delete + apply
+
+// appply rabbitmq deployment
