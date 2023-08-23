@@ -88,3 +88,4 @@ app.Run();
 // apply new deployment by rollout restart or delete + apply
 
 // appply rabbitmq deployment
+// build, push and rollout restart platformservice and commandsservice
