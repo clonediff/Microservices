@@ -23,13 +23,11 @@
         <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="7.0.10" />
         <PackageReference Include="RabbitMQ.Client" Version="6.5.0" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0"/>
-
-
-
-
     </ItemGroup>
 
-
+    <ItemGroup>
+        <Protobuf Include="Protos\platforms.proto" GrpcServices="Client"/>
+    </ItemGroup>
 
 
 </Project>
