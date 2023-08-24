@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using PlatformService;
 using PlatformService.AsyncDataServices;
 using PlatformService.Data;
+using PlatformService.SyncDataServices.Grpc;
 using PlatformService.SyncDataServices.Http;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -31,6 +32,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddSingleton<IMessageBusClient, MessageBusClient>();
 builder.Services.AddHttpClient<ICommandDataClient, HttpCommandDataClient>();
+builder.Services.AddGrpc();
 
 Console.WriteLine($"--> Command Service Endpoint: {builder.Configuration[AppSettingsConsts.CommandService]}");
 
@@ -48,6 +50,12 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapGrpcService<GrpcPlatformService>();
+
+app.Map("/protos/platforms.proto", async (HttpContext context) =>
+{
+    await context.Response.WriteAsync(await File.ReadAllTextAsync("Protos/platforms.proto"));
+});
 
 app.PrepPopulation(app.Environment.IsProduction());
 
@@ -89,3 +97,5 @@ app.Run();
 
 // appply rabbitmq deployment
 // build, push and rollout restart platformservice and commandsservice
+
+// build to auto-gen code from platforms.proto
