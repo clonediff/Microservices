@@ -35,4 +35,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+await app.PrepPopulation();
+
 app.Run();
