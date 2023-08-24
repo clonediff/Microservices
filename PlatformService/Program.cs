@@ -31,7 +31,19 @@ builder.Services.AddScoped<IPlatformRepo, PlatformRepo>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddSingleton<IMessageBusClient, MessageBusClient>();
-builder.Services.AddHttpClient<ICommandDataClient, HttpCommandDataClient>();
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services.AddHttpClient<ICommandDataClient, HttpCommandDataClient>()
+        .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+        {
+            ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+        });
+}
+else
+{
+    builder.Services.AddHttpClient<ICommandDataClient, HttpCommandDataClient>();
+}
+
 builder.Services.AddGrpc();
 
 Console.WriteLine($"--> Command Service Endpoint: {builder.Configuration[AppSettingsConsts.CommandService]}");
@@ -99,3 +111,5 @@ app.Run();
 // build, push and rollout restart platformservice and commandsservice
 
 // build to auto-gen code from platforms.proto
+
+// build and push new images, to apply new images use rollout restart

@@ -1,8 +1,10 @@
+using CommandsService;
 using CommandsService.AsyncDataServices;
 using CommandsService.Data;
 using CommandsService.EventProcessing;
 using CommandsService.SyncDataServices.Grpc;
 using Microsoft.EntityFrameworkCore;
+using PlatformService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +21,23 @@ builder.Services.AddDbContext<AppDbContext>(opt => opt.UseInMemoryDatabase("InMe
 builder.Services.AddScoped<ICommandRepo, CommandRepo>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IPlatformDataClient, PlatformDataClient>();
+
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services.AddGrpcClient<GrpcPlatform.GrpcPlatformClient>(opt =>
+    {
+        opt.Address = new Uri(builder.Configuration[AppSettingsConsts.GrpcPlatform]!);
+        opt.ChannelOptionsActions.Add(x => x.HttpHandler = new HttpClientHandler
+        {
+            ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+        });
+    });
+}
+else
+{
+    builder.Services.AddGrpcClient<GrpcPlatform.GrpcPlatformClient>(opt => 
+        opt.Address = new Uri(builder.Configuration[AppSettingsConsts.GrpcPlatform]!));
+}
 
 var app = builder.Build();
 
